@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Star, Users, Trophy, Clock } from "lucide-react"
+import { Star, Users, Trophy, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const carouselImages = [
@@ -36,28 +36,16 @@ export default function HomePage() {
     return () => clearInterval(timer)
   }, [])
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselImages.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length)
-  }
-
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#5a1428]">
       {/* Hero Section con Carrusel */}
-      <section className="relative h-screen overflow-hidden">
-        <div className="carousel-container h-full">
+      <section className="relative h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
+        <div className="relative h-full w-full">
           {carouselImages.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
-                index === currentSlide
-                  ? "translate-x-0"
-                  : index < currentSlide
-                    ? "-translate-x-full"
-                    : "translate-x-full"
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
               <Image
@@ -73,188 +61,189 @@ export default function HomePage() {
         </div>
 
         {/* Contenido superpuesto */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white px-4 max-w-4xl">
+        <div className="absolute inset-0 flex items-center justify-center px-3 sm:px-4 md:px-6 z-20">
+          <div className="text-center text-white max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl">
             <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-7xl font-bold mb-6 text-balance">Atención GRAN CONVOCATORIA</h1>
-              <div className="text-xl md:text-2xl mb-8 space-y-4 leading-relaxed">
+              <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 text-balance">
+                Atención GRAN CONVOCATORIA
+              </h1>
+              <div className="text-sm sm:text-base md:text-lg lg:text-xl mb-4 sm:mb-5 md:mb-6 space-y-1 sm:space-y-2 md:space-y-3 leading-relaxed">
                 <p>¿Eres un apasionado del fútbol?</p>
-                <p>¿Sientes la pasión en cada latido de tu corazón cada vez que el balón toca la red?</p>
-                <p className="text-2xl md:text-3xl font-bold text-secondary">
+                <p className="hidden sm:block">
+                  ¿Sientes la pasión en cada latido de tu corazón cada vez que el balón toca la red?
+                </p>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-yellow-300">
                   Entonces este es el momento que has estado esperando toda tu vida.
                 </p>
-                <p>¿Quieres demostrar tu talento? ¿Quieres demostrar que dominas el balón?</p>
+                <p className="hidden md:block">
+                  ¿Quieres demostrar tu talento? ¿Quieres demostrar que dominas el balón?
+                </p>
               </div>
 
-              <div className="bg-primary/90 backdrop-blur-sm rounded-lg p-8 mb-8 inline-block">
-                <h2 className="text-3xl md:text-5xl font-bold mb-4">Master Sport FC te espera</h2>
-                <p className="text-xl md:text-2xl mb-4">No lo pienses, ¡ÚNETE A LA FAMILIA!</p>
-                <p className="text-lg">
+              <div className="bg-[#7a1034]/90 backdrop-blur-sm rounded-lg p-3 sm:p-4 md:p-5 lg:p-6 mb-4 sm:mb-5 md:mb-6 inline-block">
+                <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3">
+                  Master Sport FC te espera
+                </h2>
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-2 sm:mb-3">
+                  No lo pienses, ¡ÚNETE A LA FAMILIA!
+                </p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg">
                   ¡Únete a la Academia Master Sport FC y juntos hagamos historia en el mundo del fútbol!
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-                <Button asChild size="lg" className="text-lg px-10 py-6 h-auto font-bold shadow-2xl">
-                  <Link href="/inscripcion">¡INSCRÍBETE AHORA!</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="text-lg px-10 py-6 h-auto font-bold bg-white/20 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-primary shadow-2xl"
-                >
-                  <Link href="/galeria">Ver Galería</Link>
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-10 md:mb-12">
+                <Link href="/inscripcion" className="w-full sm:w-auto">
+                  <Button
+                    size="lg"
+                    className="text-sm sm:text-base md:text-lg px-6 sm:px-7 md:px-8 py-4 sm:py-4 md:py-5 h-auto font-bold shadow-2xl bg-yellow-400 hover:bg-yellow-500 text-[#7a1034] w-full"
+                  >
+                    ¡INSCRÍBETE AHORA!
+                  </Button>
+                </Link>
+                <Link href="/galeria" className="w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="text-sm sm:text-base md:text-lg px-6 sm:px-7 md:px-8 py-4 sm:py-4 md:py-5 h-auto font-bold bg-white/20 backdrop-blur-sm border-2 border-white text-white hover:bg-white hover:text-[#7a1034] shadow-2xl w-full"
+                  >
+                    Ver Galería
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Controles del carrusel */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
-          aria-label="Imagen anterior"
-        >
-          <ChevronLeft size={28} />
-        </button>
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors backdrop-blur-sm"
-          aria-label="Siguiente imagen"
-        >
-          <ChevronRight size={28} />
-        </button>
-
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex space-x-3">
-          {carouselImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-4 h-4 rounded-full transition-all duration-300 ${
-                index === currentSlide ? "bg-white scale-125" : "bg-white/50 hover:bg-white/75"
-              }`}
-              aria-label={`Ir a imagen ${index + 1}`}
-            />
-          ))}
         </div>
       </section>
 
       {/* Sección de Características */}
-      <section className="py-20 bg-muted">
+      <section className="py-12 sm:py-16 md:py-20 bg-[#5a1428]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">¿Por qué elegir Master Sport FC?</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+              ¿Por qué elegir Master Sport FC?
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto px-4">
               Somos más que una academia, somos una familia que forma campeones
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-8 bg-white rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <Trophy className="w-8 h-8 text-white" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
+            <div className="text-center p-6 sm:p-7 md:p-8 bg-[#7a1034] rounded-lg shadow-lg border border-white/10">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6">
+                <Trophy className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#7a1034]" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Entrenamiento Profesional</h3>
-              <p className="text-muted-foreground">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white">
+                Entrenamiento Profesional
+              </h3>
+              <p className="text-sm sm:text-base text-white/90">
                 Metodología de entrenamiento de alto nivel con técnicos especializados
               </p>
             </div>
 
-            <div className="text-center p-8 bg-white rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <Users className="w-8 h-8 text-white" />
+            <div className="text-center p-6 sm:p-7 md:p-8 bg-[#7a1034] rounded-lg shadow-lg border border-white/10">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6">
+                <Users className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#7a1034]" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Ambiente Familiar</h3>
-              <p className="text-muted-foreground">Un ambiente de respeto, compañerismo y crecimiento personal</p>
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white">Ambiente Familiar</h3>
+              <p className="text-sm sm:text-base text-white/90">
+                Un ambiente de respeto, compañerismo y crecimiento personal
+              </p>
             </div>
 
-            <div className="text-center p-8 bg-white rounded-lg shadow-lg">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
-                <Star className="w-8 h-8 text-white" />
+            <div className="text-center p-6 sm:p-7 md:p-8 bg-[#7a1034] rounded-lg shadow-lg border border-white/10 sm:col-span-2 lg:col-span-1">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5 md:mb-6">
+                <Star className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-[#7a1034]" />
               </div>
-              <h3 className="text-2xl font-bold mb-4">Instalaciones Modernas</h3>
-              <p className="text-muted-foreground">Canchas profesionales en las mejores ubicaciones de Lima</p>
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 text-white">
+                Instalaciones Modernas
+              </h3>
+              <p className="text-sm sm:text-base text-white/90">
+                Canchas profesionales en las mejores ubicaciones de Lima
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Sección de Sedes */}
-      <section className="py-20">
+      <section className="py-20 bg-[#5a1428]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">Nuestras Sedes</h2>
-            <p className="text-xl text-muted-foreground">Dos ubicaciones estratégicas para tu comodidad</p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Nuestras Sedes</h2>
+            <p className="text-xl text-white/90">Dos ubicaciones estratégicas para tu comodidad</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Sede Santa Anita */}
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="bg-[#7a1034] rounded-lg shadow-xl overflow-hidden border border-white/10">
               <div className="relative h-64">
                 <Image src="/images/flyer-santa-anita.jpg" alt="Sede Santa Anita" fill className="object-cover" />
               </div>
               <div className="p-8">
-                <h3 className="text-3xl font-bold text-primary mb-4">Santa Anita</h3>
+                <h3 className="text-3xl font-bold text-white mb-4">Santa Anita</h3>
                 <div className="space-y-3 mb-6">
-                  <p className="flex items-center text-muted-foreground">
-                    <Clock className="w-5 h-5 mr-2 text-primary" />
+                  <p className="flex items-center text-white/90">
+                    <Clock className="w-5 h-5 mr-2 text-yellow-400" />
                     Martes y Jueves: 9:00 PM - 11:00 PM
                   </p>
-                  <p className="text-muted-foreground">Canchas Sport Plaza - Referencia frente al Mall</p>
+                  <p className="text-white/90">Canchas Sport Plaza - Referencia frente al Mall</p>
                 </div>
                 <div className="space-y-2 mb-6">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>1 Mes</span>
-                    <span className="font-bold text-primary">S/ 180</span>
+                    <span className="font-bold text-yellow-400">S/ 180</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>2 Meses</span>
-                    <span className="font-bold text-primary">S/ 320</span>
+                    <span className="font-bold text-yellow-400">S/ 320</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>3 Meses</span>
-                    <span className="font-bold text-primary">S/ 480</span>
+                    <span className="font-bold text-yellow-400">S/ 480</span>
                   </div>
                 </div>
-                <Button asChild className="w-full">
-                  <Link href="/inscripcion">Inscríbete en Santa Anita</Link>
-                </Button>
+                <Link href="/inscripcion">
+                  <Button className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#7a1034] font-bold">
+                    Inscríbete en Santa Anita
+                  </Button>
+                </Link>
               </div>
             </div>
 
             {/* Sede La Molina */}
-            <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+            <div className="bg-[#7a1034] rounded-lg shadow-xl overflow-hidden border border-white/10">
               <div className="relative h-64">
                 <Image src="/images/flyer-la-molina.jpg" alt="Sede La Molina" fill className="object-cover" />
               </div>
               <div className="p-8">
-                <h3 className="text-3xl font-bold text-primary mb-4">La Molina</h3>
+                <h3 className="text-3xl font-bold text-white mb-4">La Molina</h3>
                 <div className="space-y-3 mb-6">
-                  <p className="flex items-center text-muted-foreground">
-                    <Clock className="w-5 h-5 mr-2 text-primary" />
+                  <p className="flex items-center text-white/90">
+                    <Clock className="w-5 h-5 mr-2 text-yellow-400" />
                     Lunes y Miércoles: 8:00 PM - 9:00 PM
                   </p>
-                  <p className="text-muted-foreground">Javier Prado - Canchas Deportop - Al costado del Metro</p>
+                  <p className="text-white/90">Javier Prado - Canchas Deportop - Al costado del Metro</p>
                 </div>
                 <div className="space-y-2 mb-6">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>1 Mes</span>
-                    <span className="font-bold text-primary">S/ 150</span>
+                    <span className="font-bold text-yellow-400">S/ 150</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>2 Meses</span>
-                    <span className="font-bold text-primary">S/ 250</span>
+                    <span className="font-bold text-yellow-400">S/ 250</span>
                   </div>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center text-white">
                     <span>3 Meses</span>
-                    <span className="font-bold text-primary">S/ 300</span>
+                    <span className="font-bold text-yellow-400">S/ 300</span>
                   </div>
                 </div>
-                <Button asChild className="w-full">
-                  <Link href="/inscripcion">Inscríbete en La Molina</Link>
-                </Button>
+                <Link href="/inscripcion">
+                  <Button className="w-full bg-yellow-400 hover:bg-yellow-500 text-[#7a1034] font-bold">
+                    Inscríbete en La Molina
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -270,17 +259,20 @@ export default function HomePage() {
             - Cupos limitados.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="secondary" className="text-lg px-8 py-4">
-              <Link href="/inscripcion">¡INSCRÍBETE YA!</Link>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary bg-transparent"
-            >
-              <Link href="/contacto">Más Información</Link>
-            </Button>
+            <Link href="/inscripcion">
+              <Button size="lg" variant="secondary" className="text-lg px-8 py-4">
+                ¡INSCRÍBETE YA!
+              </Button>
+            </Link>
+            <Link href="/contacto">
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-primary bg-transparent"
+              >
+                Más Información
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

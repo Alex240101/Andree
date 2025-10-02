@@ -1,245 +1,124 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
-import { X, Play, ChevronLeft, ChevronRight } from "lucide-react"
+import { X, Play } from "lucide-react"
 
-const galleryItems = [
+const videos = [
   {
     id: 1,
-    type: "image",
-    src: "/jugadores-de-f-tbol-entrenando-en-cancha-profesion.jpg",
-    alt: "Entrenamiento profesional en Master Sport FC",
-    category: "Entrenamientos",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-training-video-1.jpg",
   },
   {
     id: 2,
-    type: "image",
-    src: "/equipo-de-f-tbol-celebrando-victoria.jpg",
-    alt: "Celebración del equipo Master Sport FC",
-    category: "Celebraciones",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-match-highlights-video-2.jpg",
   },
   {
     id: 3,
-    type: "image",
-    src: "/cancha-de-f-tbol-moderna-con-iluminaci-n-nocturna.jpg",
-    alt: "Instalaciones modernas de Master Sport FC",
-    category: "Instalaciones",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-skills-training-video-3.jpg",
   },
   {
     id: 4,
-    type: "video",
-    src: "/video-de-entrenamiento-de-f-tbol.jpg",
-    alt: "Video de entrenamiento técnico",
-    category: "Videos",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-team-celebration-video-4.jpg",
   },
   {
     id: 5,
-    type: "image",
-    src: "/placeholder-wyqls.png",
-    alt: "Jugadores jóvenes en formación",
-    category: "Entrenamientos",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-practice-session-video-5.jpg",
   },
   {
     id: 6,
-    type: "image",
-    src: "/placeholder-v5017.png",
-    alt: "Foto grupal del equipo",
-    category: "Equipo",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-game-action-video-6.jpg",
   },
   {
     id: 7,
-    type: "video",
-    src: "/highlights-de-partido-de-f-tbol.jpg",
-    alt: "Highlights del último partido",
-    category: "Videos",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-drills-training-video-7.jpg",
   },
   {
     id: 8,
-    type: "image",
-    src: "/cancha-de-f-tbol-sede-santa-anita.jpg",
-    alt: "Sede Santa Anita",
-    category: "Instalaciones",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-tournament-video-8.jpg",
   },
   {
     id: 9,
-    type: "image",
-    src: "/cancha-de-f-tbol-sede-la-molina.jpg",
-    alt: "Sede La Molina",
-    category: "Instalaciones",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "/soccer-academy-training-video-9.jpg",
   },
 ]
 
-const categories = ["Todos", "Entrenamientos", "Celebraciones", "Instalaciones", "Videos", "Equipo"]
-
 export default function GaleriaPage() {
-  const [selectedCategory, setSelectedCategory] = useState("Todos")
-  const [selectedItem, setSelectedItem] = useState<(typeof galleryItems)[0] | null>(null)
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const filteredItems =
-    selectedCategory === "Todos" ? galleryItems : galleryItems.filter((item) => item.category === selectedCategory)
-
-  const openModal = (item: (typeof galleryItems)[0]) => {
-    setSelectedItem(item)
-    setCurrentIndex(filteredItems.findIndex((i) => i.id === item.id))
-  }
-
-  const closeModal = () => {
-    setSelectedItem(null)
-  }
-
-  const nextItem = () => {
-    const nextIndex = (currentIndex + 1) % filteredItems.length
-    setCurrentIndex(nextIndex)
-    setSelectedItem(filteredItems[nextIndex])
-  }
-
-  const prevItem = () => {
-    const prevIndex = (currentIndex - 1 + filteredItems.length) % filteredItems.length
-    setCurrentIndex(prevIndex)
-    setSelectedItem(filteredItems[prevIndex])
-  }
+  const [selectedVideo, setSelectedVideo] = useState<(typeof videos)[0] | null>(null)
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      {/* Header */}
-      <section className="bg-primary text-white py-20">
+    <div className="min-h-screen bg-[#5a1428]">
+      {/* Header - Responsive */}
+      <section className="bg-[#7a1034] text-white py-12 sm:py-16 md:py-20 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">Galería Master Sport FC</h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
-            Revive los mejores momentos de nuestra academia. Entrenamientos, celebraciones y la pasión por el fútbol.
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+            Galería Master Sport FC
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed">
+            Revive los mejores momentos de nuestra academia
           </p>
         </div>
       </section>
 
-      {/* Filtros */}
-      <section className="py-8 bg-white shadow-sm">
+      {/* Galería de Videos - 9 videos responsive en grid */}
+      <section className="py-8 sm:py-10 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full font-medium transition-colors ${
-                  selectedCategory === category
-                    ? "bg-primary text-white"
-                    : "bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Galería */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+            {videos.map((video) => (
               <div
-                key={item.id}
-                className="group relative bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                onClick={() => openModal(item)}
+                key={video.id}
+                className="group relative bg-[#7a1034] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all cursor-pointer border border-white/10 aspect-video"
+                onClick={() => setSelectedVideo(video)}
               >
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={item.src || "/placeholder.svg"}
-                    alt={item.alt}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {item.type === "video" && (
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                        <Play className="w-8 h-8 text-primary ml-1" />
-                      </div>
-                    </div>
-                  )}
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {item.category}
-                    </span>
-                  </div>
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${video.thumbnail})` }}
+                >
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
                 </div>
-                <div className="p-4">
-                  <p className="text-muted-foreground text-sm">{item.alt}</p>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white/90 group-hover:bg-white rounded-full flex items-center justify-center transition-all group-hover:scale-110">
+                    <Play className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-[#7a1034] ml-1" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {filteredItems.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">No hay elementos en esta categoría.</p>
-            </div>
-          )}
         </div>
       </section>
 
-      {/* Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl w-full">
-            {/* Botón cerrar */}
-            <button onClick={closeModal} className="absolute -top-12 right-0 text-white hover:text-gray-300 z-10">
-              <X size={32} />
+      {/* Modal de Video - Responsive */}
+      {selectedVideo && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-10 sm:-top-12 right-0 text-white hover:text-gray-300 transition-colors"
+              aria-label="Cerrar video"
+            >
+              <X className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10" />
             </button>
 
-            {/* Navegación */}
-            {filteredItems.length > 1 && (
-              <>
-                <button
-                  onClick={prevItem}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10"
-                >
-                  <ChevronLeft size={48} />
-                </button>
-                <button
-                  onClick={nextItem}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10"
-                >
-                  <ChevronRight size={48} />
-                </button>
-              </>
-            )}
-
-            {/* Contenido */}
-            <div className="bg-white rounded-lg overflow-hidden">
-              <div className="relative h-96 md:h-[600px]">
-                {selectedItem.type === "video" ? (
-                  <div className="w-full h-full bg-black flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <Play className="w-16 h-16 mx-auto mb-4" />
-                      <p>Video: {selectedItem.alt}</p>
-                      <p className="text-sm text-gray-300 mt-2">
-                        (Funcionalidad de video se implementará próximamente)
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <Image
-                    src={selectedItem.src || "/placeholder.svg"}
-                    alt={selectedItem.alt}
-                    fill
-                    className="object-contain"
-                  />
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {selectedItem.category}
-                    </span>
-                    <h3 className="text-xl font-bold mt-2">{selectedItem.alt}</h3>
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {currentIndex + 1} de {filteredItems.length}
-                  </div>
-                </div>
+            <div className="bg-[#7a1034] rounded-lg overflow-hidden border-2 border-white/20 shadow-2xl">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={selectedVideo.embedUrl}
+                  title="Video de Master Sport FC"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
             </div>
           </div>
